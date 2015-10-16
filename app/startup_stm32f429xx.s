@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file      startup_stm32f429xx.s
   * @author    MCD Application Team
-  * @version   V1.2.1
-  * @date      13-March-2015
+  * @version   V2.3.0
+  * @date      02-March-2015 
   * @brief     STM32F429xx Devices vector table for Atollic TrueSTUDIO toolchain. 
   *            This module performs:
   *                - Set the initial SP
@@ -51,7 +51,6 @@
 .global  g_pfnVectors
 .global  Default_Handler
 
-
 /* start address for the initialization values of the .data section. 
 defined in linker script */
 .word  _sidata
@@ -77,7 +76,6 @@ defined in linker script */
     .section  .text.Reset_Handler
   .weak  Reset_Handler
   .type  Reset_Handler, %function
-
 Reset_Handler: 
   ldr   sp, =_estack       /* set stack pointer */
  
@@ -110,9 +108,9 @@ LoopFillZerobss:
   bcc  FillZerobss
 
 /* Call the clock system intitialization function.*/
-  bl  SystemInit
+  bl  SystemInit   
 /* Call static constructors */
-  bl __libc_init_array
+    bl __libc_init_array
 /* Call the application's entry point.*/
   bl  main
   bx  lr    
