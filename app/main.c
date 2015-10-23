@@ -11,11 +11,23 @@ int main(void)
 
 	d = d* a;
 
-
-
     while(1)
     {
     	writeOne(GPIO_PIN_13, GPIOG);
+    	writeZero(GPIO_PIN_14, GPIOG);
+    	writeOne(GPIO_PIN_13, GPIOB);
+    	writeZero(GPIO_PIN_5, GPIOC);
+
+    	delay(50000);
     	writeZero(GPIO_PIN_13, GPIOG);
+    	writeOne(GPIO_PIN_14, GPIOG);
+    	writeZero(GPIO_PIN_13, GPIOB);
+    	writeOne(GPIO_PIN_5, GPIOC);
+    	delay(50000);
     }
+}
+
+void delay(int delay){
+	while(delay != 0)
+		delay--;
 }

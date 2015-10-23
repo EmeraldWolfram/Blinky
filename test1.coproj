@@ -93,8 +93,8 @@
     <File name="Config/system_stm32f4xx.h" path="app/system_stm32f4xx.h" type="1"/>
     <File name="Core" path="" type="2"/>
     <File name="Config/stm32f4xx.h" path="app/stm32f4xx.h" type="1"/>
-    <File name="Config" path="" type="2"/>
     <File name="Core/core_cmInstr.h" path="../../../CoIDE/workspace/stm32cubef4/STM32Cube_FW_F4_V1.5.0/Drivers/CMSIS/Include/core_cmInstr.h" type="1"/>
+    <File name="Config" path="" type="2"/>
     <File name="App/Gpio.c" path="app/Gpio.c" type="1"/>
   </Files>
   <Bookmarks/>
