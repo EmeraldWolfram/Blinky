@@ -2,12 +2,14 @@
 #define	__Gpio_H__
 
 #include <stdint.h>
-#include "stm32f4xx_hal_gpio.h"
+typedef struct GPIO_t GPIO;
+
+#include "Rcc.h"
+
 
 #define	GPIO_OUTPUT	GPIO_MODE_OUTPUT_PP
 #define	GPIO_INPUT	GPIO_MODE_INPUT
 
-typedef struct GPIO_t GPIO;
 struct GPIO_t{
 	uint32_t MODER;
 	uint32_t OTYPER;
@@ -65,8 +67,7 @@ struct GPIO_t{
 #define	PORTG	((GPIO *)GPIOG_BASE_ADDRESS)
 
 void configurePin(int direction, int pinNum, GPIO *portNum);
-void writeOne(int pinNum, GPIO_InitTypeDef *port);
-void writeZero(int pinNum, GPIO_InitTypeDef *port);
-
+void writeOne(uint16_t pinNum, GPIO *port);
+void writeZero(uint16_t pinNum, GPIO *port);
 
 #endif	//__Gpio_H__
