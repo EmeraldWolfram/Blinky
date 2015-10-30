@@ -1,38 +1,64 @@
 #include "Gpio.h"
-//#include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal_rcc.h"
 
-void configurePin(int direction, int pinNum, GPIO *portNum){
+/**
+ * configureOutput:
+ *
+ * This function configure the pin to become an output pin.
+ *
+ * @direction	is the output mode
+ * @pinNum		is the pin number of the port
+ * @port		is the port to configure
+ */
+void configureOutput(int direction, int pinNum, GPIO *port){
 
-	gpioUnresetEnableClock(portNum);
+	gpioUnresetEnableClock(port);
 
-//	int *aPtr = (int *)0x40023810;
-//	aPtr[0] = 0x00000000;
-//
-//	int *bPtr = (int *)0x40023830;
-//	bPtr[0] = 0x0010007F;
-
-//	__HAL_RCC_GPIOG_CLK_ENABLE();
-//	__HAL_RCC_GPIOC_CLK_ENABLE();
-//	__HAL_RCC_GPIOB_CLK_ENABLE();
-
-	portNum->MODER &= ~(3 << (pinNum*2));
-	portNum->MODER |= direction << (pinNum*2);
-	portNum->OTYPER &= ~(1 << (pinNum));
-	portNum->OSPEED &= ~(3 << (pinNum*2));
-	portNum->OSPEED |= GPIO_SPEED_V_HIGH << (pinNum*2);
-
+	port->MODER &= ~(3 << (pinNum*2));
+	port->MODER |= direction << (pinNum*2);
+	port->OTYPER &= ~(1 << (pinNum));
+	port->OSPEED &= ~(3 << (pinNum*2));
+	port->OSPEED |= GPIO_SPEED_V_HIGH << (pinNum*2);
 }
 
+/**
+ * configureInput:
+ *
+ * This function configure the pin to become an input pin.
+ *
+ * @pullMeth	is the method of pull (no pull, pull-up, pull-down or reserve)
+ * @pinNum		is the pin number of the port
+ * @port		is the port to configure
+ */
+void configureInput(int pullMeth, int pinNum, GPIO *port){
+	gpioUnresetEnableClock(port);
+	port->MODER &= ~(3 << (pinNum*2));
+	port->MODER |= 0 << (pinNum*2);
+	port->PUPDR &= ~(3 << (pinNum*2));
+	port->PUPDR |= pullMeth << (pinNum*2);
+}
+
+/**
+ * writeOne:
+ *
+ * This function set the particular pin to 1
+ *
+ * @pinNum		is the pin number of the port
+ * @port		is the port that have the particular pin
+ */
 void writeOne(uint16_t pinNum, GPIO *port){
-	port->ODR &= ~( 1 << (pinNum));
-	port->ODR |= 1 << (pinNum);
+	port->BSRR	= (uint32_t)(1 << pinNum);
 }
-
+/**
+ * writeZero:
+ *
+ * This function set the particular pin to 0
+ *
+ * @pinNum		is the pin number of the port
+ * @port		is the port that have the particular pin
+ */
 void writeZero(uint16_t pinNum, GPIO *port){
-
-	port->ODR &= ~( 1 << (pinNum));
-	port->ODR |= 0 << (pinNum);
+	port->BSRR = (uint32_t)(1 << (pinNum + 16));
 }
 
 

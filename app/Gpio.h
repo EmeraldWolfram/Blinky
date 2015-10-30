@@ -66,7 +66,13 @@ struct GPIO_t{
 #define	PORTF	((GPIO *)GPIOF_BASE_ADDRESS)
 #define	PORTG	((GPIO *)GPIOG_BASE_ADDRESS)
 
-void configurePin(int direction, int pinNum, GPIO *portNum);
+#define NO_PULL		0
+#define PULL_UP		1
+#define PULL_DOWN	2
+#define RESERVE		3
+
+void configureOutput(int direction, int pinNum, GPIO *port);
+void configureInput(int pullMeth, int pinNum, GPIO *port);
 void writeOne(uint16_t pinNum, GPIO *port);
 void writeZero(uint16_t pinNum, GPIO *port);
 
